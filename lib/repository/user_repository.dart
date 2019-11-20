@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:clover/locator.dart';
+import 'package:clover/model/duyuru.dart';
 import 'package:clover/model/user.dart';
 import 'package:clover/services/auth_base.dart';
 import 'package:clover/services/fake_auth_service.dart';
@@ -104,9 +105,38 @@ class UserRepository implements AuthBase {
     }
   }
 
+  Future<bool> saveDuyuru(Duyuru kaydedilecekDuyuru) async {
+    if (appMode == AppMode.DEBUG) {
+      return true;
+    } else {
+      return _firestoreDBService.saveDuyuru(kaydedilecekDuyuru);
+    }
+  }
 
 
 
+
+  Future<List<Duyuru>> getDuyuruWithPagination(
+      String currentUserID,
+      Duyuru enSonGetirilenDuyuru,
+      int getirilecekElemanSayisi) async {
+    if (appMode == AppMode.DEBUG) {
+      return [];
+    } else {
+      return await _firestoreDBService.getDuyuruWithPagination(currentUserID,
+          enSonGetirilenDuyuru, getirilecekElemanSayisi);
+    }
+  }
+
+
+  Stream<List<Duyuru>> getDuyuru(
+      String currentUserID) {
+    if (appMode == AppMode.DEBUG) {
+      return Stream.empty();
+    } else {
+      return _firestoreDBService.getDuyuru(currentUserID);
+    }
+  }
 
 
 

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:clover/model/duyuru.dart';
 import 'package:clover/model/user.dart';
 import 'package:clover/services/database_base.dart';
 
@@ -77,14 +78,90 @@ class FirestoreDBService implements DBBase {
     }
   }
 
+
 //////////////////////////////////////////////////////////////////////////////////////
 
+  Future<bool> saveDuyuru(Duyuru kaydedilecekDuyuru) async {
+
+    var _duyuruID = _firebaseDB.collection("duyurular").document().documentID;
+    var _myDocumentID = kaydedilecekDuyuru.userID; /// userID ye göre döküman açacağız
+
+    var _kaydedilecekMesajMapYapisi = kaydedilecekDuyuru.toMap();
+
+
+    await _firebaseDB
+        .collection("duyurular")
+        .document(_myDocumentID)
+        .collection("mesajlar")
+        .document(_duyuruID)
+        .setData(_kaydedilecekMesajMapYapisi);
+
+    await _firebaseDB.collection("konusmalar").document(_myDocumentID).setData({
+      "duyuru_sahibi": kaydedilecekDuyuru.userID,
+      "duyuru_konusu": kaydedilecekDuyuru.konutxt,
+      "son_yollanan_mesaj": kaydedilecekDuyuru.mesajDuyuru,
+      "konusma_goruldu": false,
+      "olusturulma_tarihi": FieldValue.serverTimestamp(),
+    });
+
+    return true;
+  }
 
 
 
 
 
+  Future<List<Duyuru>> getDuyuruWithPagination(
+      String currentUserID,
+      Duyuru enSonGetirilenMesaj,
+      int getirilecekElemanSayisi) async {
+    QuerySnapshot _querySnapshot;
+    List<Duyuru> _tumDuyurular = [];
 
+    if (enSonGetirilenMesaj == null) {
+      _querySnapshot = await Firestore.instance
+          .collection("duyurular")
+          .document()
+          .collection("mesajlar")
+          .orderBy("createdAt", descending: true)
+          .limit(getirilecekElemanSayisi)
+          .getDocuments();
+    } else {
+      _querySnapshot = await Firestore.instance
+          .collection("duyurular")
+          .document()
+          .collection("mesajlar")
+          .orderBy("createdAt", descending: true)
+          .startAfter([enSonGetirilenMesaj.createdAt])
+          .limit(getirilecekElemanSayisi)
+          .getDocuments();
+
+      await Future.delayed(Duration(seconds: 1));
+    }
+
+    for (DocumentSnapshot snap in _querySnapshot.documents) {
+      Duyuru _tekMesaj = Duyuru.fromMap(snap.data);
+      _tumDuyurular.add(_tekMesaj);
+    }
+
+    return _tumDuyurular;
+  }
+
+
+  @override
+  Stream<List<Duyuru>> getDuyuru(
+      String currentUserID) {
+    var snapShot = _firebaseDB
+        .collection("duyurular")
+        .document(currentUserID)
+        .collection("mesajlar")
+        .orderBy("createdAt", descending: true)
+        .limit(1)
+        .snapshots();
+    return snapShot.map((duyuruListesi) => duyuruListesi.documents
+        .map((duyuru) => Duyuru.fromMap(duyuru.data))
+        .toList());
+  }
 
 
 
