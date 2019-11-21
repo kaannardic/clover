@@ -116,27 +116,19 @@ class UserRepository implements AuthBase {
 
 
 
-  Future<List<Duyuru>> getDuyuruWithPagination(
-      String currentUserID,
-      Duyuru enSonGetirilenDuyuru,
-      int getirilecekElemanSayisi) async {
+
+
+
+  Future<List<Duyuru>> getDuyuru() async{
     if (appMode == AppMode.DEBUG) {
       return [];
     } else {
-      return await _firestoreDBService.getDuyuruWithPagination(currentUserID,
-          enSonGetirilenDuyuru, getirilecekElemanSayisi);
+      var tumDuyuruListesi = await _firestoreDBService.getDuyuru();
+      return tumDuyuruListesi;
     }
   }
 
 
-  Stream<List<Duyuru>> getDuyuru(
-      String currentUserID) {
-    if (appMode == AppMode.DEBUG) {
-      return Stream.empty();
-    } else {
-      return _firestoreDBService.getDuyuru(currentUserID);
-    }
-  }
 
 
 

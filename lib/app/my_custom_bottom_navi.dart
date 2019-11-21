@@ -47,7 +47,7 @@ class MyCustomBottomNavigation extends StatelessWidget {
 
     return BottomNavigationBarItem(
       icon: Icon(olusturulacakTab.icon),
-      title: Text(olusturulacakTab.title), // isteğe göre sil bunu
+      // title: Text(olusturulacakTab.title), // isteğe göre sil bunu
     );
   }
 }

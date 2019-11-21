@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
 
   Map<TabItem, Widget> tumSayfalar() {
     return {
-      TabItem.Globalsayfa: KullanicilarPage(),
+      TabItem.Globalsayfa: GlobalPage(),
       TabItem.Profilsayfa: ProfilPage(),
       TabItem.Mesajsayfa: MessagePage(),
 
