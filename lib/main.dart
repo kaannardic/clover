@@ -1,5 +1,6 @@
 import 'package:clover/app/landing_page.dart';
 import 'package:clover/locator.dart';
+
 import 'package:clover/viewmodel/duyuru_model.dart';
 import 'package:clover/viewmodel/user_model.dart';
 import 'package:flutter/material.dart';
@@ -22,20 +23,21 @@ class MyApp extends StatelessWidget {
         builder: (context) => DuyuruModel(),
         child: MaterialApp(
 
-          title: "Flutter Social",
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            canvasColor: Colors.white,
-            //Color(0xFF393C4F)
-            accentColor: Colors.teal,
-            backgroundColor: Colors.white,
-            primarySwatch: Colors.amber,
-          ),
-          home: LandingPage(
-          ),
+            title: "Flutter Social",
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              canvasColor: Colors.white,
+              //Color(0xFF393C4F)
+              accentColor: Colors.teal,
+              backgroundColor: Colors.white,
+              primarySwatch: Colors.amber,
+            ),
+            home: LandingPage(
+            ),
 
+          ),
         ),
-      ),
+
     );
   }
 }

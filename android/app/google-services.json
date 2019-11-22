@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "895161750123-0nrsc1aecfb275mt071tc0s5kuqd2he2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kaannardic.clover",
+            "certificate_hash": "6ae66534b6e0955107f52e76f4826fd35d2b9b5d"
+          }
+        },
+        {
           "client_id": "895161750123-85pvi4vjtilua7n4p08gl9f6aus4apib.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

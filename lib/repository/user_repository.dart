@@ -8,6 +8,7 @@ import 'package:clover/services/fake_auth_service.dart';
 import 'package:clover/services/firebase_auth_service.dart';
 import 'package:clover/services/firebase_storage_service.dart';
 import 'package:clover/services/firestore_db_service.dart';
+import 'package:clover/viewmodel/duyuru_model.dart';
 
 
 enum AppMode { DEBUG, RELEASE }
@@ -92,6 +93,9 @@ class UserRepository implements AuthBase {
     } else {
       var profilFotoURL = await _firebaseStorageService.uploadFile(
           userID, fileType, profilFoto);
+
+
+
       await _firestoreDBService.updateProfilFoto(userID, profilFotoURL);
       return profilFotoURL;
     }
@@ -105,10 +109,17 @@ class UserRepository implements AuthBase {
     }
   }
 
-  Future<bool> saveDuyuru(Duyuru kaydedilecekDuyuru) async {
+
+
+
+
+
+
+  Future<bool> saveDuyuru(Duyuru kaydedilecekDuyuru ) async {
     if (appMode == AppMode.DEBUG) {
       return true;
     } else {
+
       return _firestoreDBService.saveDuyuru(kaydedilecekDuyuru);
     }
   }
@@ -118,6 +129,47 @@ class UserRepository implements AuthBase {
 
 
 
+/*
+  Future<List<Duyuru>> getDuyuru() async{
+    if (appMode == AppMode.DEBUG) {
+      return [];
+    } else {
+      var tumDuyuruListesi = await _firestoreDBService.getDuyuru();
+
+
+
+      for(var oankiDuyuru in tumDuyuruListesi){
+        var userListesindekiKullanici = listedeUserBul(oankiDuyuru.userID);
+
+
+        if(userListesindekiKullanici != null){
+          oankiDuyuru.duyuruUserName = userListesindekiKullanici.userName;
+          oankiDuyuru.duyuruProfilURL = userListesindekiKullanici.profilURL;
+        }else{
+
+          print("aranılan user  getirilmedi");
+          var veritabanindanOkunanUser = await _firestoreDBService.readUser(oankiDuyuru.userID);
+          oankiDuyuru.duyuruUserName = veritabanindanOkunanUser.userName;
+          oankiDuyuru.duyuruProfilURL = veritabanindanOkunanUser.profilURL;
+        }
+
+
+      }
+    }
+  }
+
+
+  User listedeUserBul(String userID){
+    for(int i=0; i< tumKullaniciListesi.length;i++){
+      if(tumKullaniciListesi[i].userID==userID){
+        return tumKullaniciListesi[i];
+      }
+      return null;
+    }
+  }
+
+  */
+  
 
   Future<List<Duyuru>> getDuyuru() async{
     if (appMode == AppMode.DEBUG) {
@@ -127,6 +179,8 @@ class UserRepository implements AuthBase {
       return tumDuyuruListesi;
     }
   }
+
+
 
 
 

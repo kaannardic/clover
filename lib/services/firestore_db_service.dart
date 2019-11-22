@@ -60,6 +60,15 @@ class FirestoreDBService implements DBBase {
         .collection("users")
         .document(userID)
         .updateData({'profilURL': profilFotoURL});
+
+
+    await _firebaseDB
+        .collection("son_duyurular")
+        .document(userID)
+        .updateData({'duyuru_Url': profilFotoURL});
+
+
+
     return true;
   }
 
@@ -82,8 +91,8 @@ class FirestoreDBService implements DBBase {
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-  Future<bool> saveDuyuru(Duyuru kaydedilecekDuyuru) async {
-    var _duyuruID = _firebaseDB.collection("duyurular").document().documentID;
+  Future<bool> saveDuyuru(Duyuru kaydedilecekDuyuru ) async {
+    var _duyuruID = _firebaseDB.collection("duyuru_atanlar").document().documentID;
     var _myDocumentID = kaydedilecekDuyuru.userID;
 
     /// userID ye göre döküman açacağız
@@ -91,8 +100,10 @@ class FirestoreDBService implements DBBase {
     var _kaydedilecekMesajMapYapisi = kaydedilecekDuyuru.toMap();
 
     await _firebaseDB
-        .collection("duyurular")
+        .collection("duyuru_atanlar")
         .document()
+       // .collection("duyurular")
+        //.document(_duyuruID)
         .setData(_kaydedilecekMesajMapYapisi);
 
     /*await _firebaseDB
@@ -104,6 +115,8 @@ class FirestoreDBService implements DBBase {
 */
     await _firebaseDB.collection("son_duyurular").document(_myDocumentID).setData({
       "duyuru_sahibi": kaydedilecekDuyuru.userID,
+      "duyuru_Url": kaydedilecekDuyuru.duyuruProfilURL,
+      "duyuru_Username": kaydedilecekDuyuru.duyuruUserName,
       "duyuru_konusu": kaydedilecekDuyuru.konutxt,
       "son_yollanan_mesaj": kaydedilecekDuyuru.mesajDuyuru,
       "konusma_goruldu": false,
@@ -116,11 +129,22 @@ class FirestoreDBService implements DBBase {
   @override
   Future<List<Duyuru>> getDuyuru() async {
     QuerySnapshot querySnapshot =
-        await _firebaseDB.collection("duyurular").orderBy("konutxt").getDocuments();
+        await _firebaseDB.collection("duyuru_atanlar")
+            .orderBy("createdAt",descending: true).getDocuments();
 
+    List<Duyuru> tumDuyurular = [];
     for (DocumentSnapshot tekDuyuru in querySnapshot.documents) {
-      print("okunan Duyuru" + tekDuyuru.data.toString());
+        Duyuru _tekDuyuru = Duyuru.fromMap(tekDuyuru.data);
+        tumDuyurular.add(_tekDuyuru);
     }
-    return null;
+    return tumDuyurular;
   }
+
+
+
+
+
+
+
+
 }

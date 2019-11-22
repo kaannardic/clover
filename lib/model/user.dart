@@ -23,7 +23,7 @@ class User {
       userName ?? email.substring(0, email.indexOf("@")) + ramdomSayiUret(),
       // maildeki kısmı @ e kadar alıp username yapacağız
       'profilURL': profilURL ??
-          'http://i.pinimg.com/280x280_RS/22/7c/0b/227c0b7a3ac677014b0729252cee1a6f.jpg',
+          'https://pbs.twimg.com/profile_images/707968846880227328/ylFJEqxn.jpg',
       'createdAt': createdAt ?? FieldValue.serverTimestamp(),
       'updatedAt': updatedAt ?? FieldValue.serverTimestamp(),
       'seviye': seviye ?? 1,

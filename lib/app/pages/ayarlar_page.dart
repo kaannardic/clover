@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:clover/common_widget/platform_duyarli_alert_dialog.dart';
 import 'package:clover/common_widget/progres_widget.dart';
 import 'package:clover/common_widget/social_log_in_button.dart';
+import 'package:clover/viewmodel/duyuru_model.dart';
 import 'package:clover/viewmodel/user_model.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -313,6 +314,7 @@ class _AyarlarPageState extends State<AyarlarPage> {
 
   void _profilFotoGuncelle(BuildContext context) async {
     final _userModel = Provider.of<UserModel>(context);
+    final _duyuruModel = Provider.of<DuyuruModel>(context);
     if(_profilFoto == null){
       MyProgresIndicator();
       print("myprogresi geçti");

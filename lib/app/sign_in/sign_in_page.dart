@@ -69,18 +69,9 @@ class SignInPage extends StatelessWidget {
                       MdiIcons.clover,
                       size: 250,
                       color: Colors.white,
-                    ) //Image.asset("images/catspaw.png",width: 200,alignment:Alignment.center ,),
+                    )
                 ),
-                /*Text(
-              "Cat'sPaw",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.amber,
-                fontWeight: FontWeight.bold,
-                fontSize: 32,
-              ),
 
-            ),*/
 
                 SizedBox(
                   height: 50,

@@ -38,10 +38,5 @@ class DuyuruModel with ChangeNotifier {
     return tumDuyuruListesi;
 
   }
-/*
-
-var tumDuyuruListesi = await _userRepository.getDuyuru();
-    return tumDuyuruListesi;
-    */
 
 }
